@@ -1,11 +1,6 @@
 language: node_js
 node_js:
     - "lts/*"
-env:
-  global:
-  - 'SFTP_USER=[user]'
-  - 'SFTP_PASSWORD=[password]'
-  - 'SFTP_KEY=[base64-encoded-rsa-key]'
 
 install:
     - npm install
@@ -15,9 +10,8 @@ cache:
     directories:
         - "node_modules"
 after_success:
-- ls -a
-- echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
+- echo "${DEPLOY_KEY}" > /tmp/id_rsa
 - curl --ftp-create-dirs
-       -T filename
-       --key /tmp/sftp_rsa
-       sftp://${SFTP_USER}:${SFTP_PASSWORD}@example.com/directory/filename
+       -T dist
+       --key /tmp/id_rsa
+       sftp://${DEPLOY_USER}@${DEPLOY_URL}
