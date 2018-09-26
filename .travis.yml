@@ -10,7 +10,7 @@ cache:
     directories:
         - "node_modules"
 after_success:
-- echo "${DEPLOY_KEY}" > /tmp/id_rsa
+- echo "${SFTP_KEY}" | base64 --decode >/tmp/id_rsa
 - curl --ftp-create-dirs
        -T dist
        --key /tmp/id_rsa
