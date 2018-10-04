@@ -6,14 +6,10 @@ cache:
   - node_modules
 addons:
   ssh_known_hosts: "<deploy-host>"
-
-
 install:
 - npm install
 script:
 - npm run build
-
-  
 before_deploy:
 - openssl aes-256-cbc -K $encrypted_0184aa3b45b2_key -iv $encrypted_0184aa3b45b2_iv
   -in deploy_rsa.enc -out /tmp/deploy_rsa -d
